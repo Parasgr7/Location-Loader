@@ -1,3 +1,21 @@
-<h1>
-  {{title}}
-</h1>
+<div class="container">
+
+    <h2>Welcome to StartUp Flux</h2>
+    <button (click)="login()" class="btn btn-lg btn-primary btn-block">
+    Login with facebook
+  </button>
+  <button [routerLink]="['/register']" class="btn btn-lg btn-primary btn-block">
+    Register
+  </button>
+  <button  [routerLink]="['/signup']" class="btn btn-lg btn-primary btn-block">
+    Signup
+  </button>
+    <button (click)="logout()" class="btn btn-lg btn-primary btn-block">
+    Logout
+  </button>
+</div>
+
+
+<div class="conatiner">
+<router-outlet></router-outlet>
+</div>

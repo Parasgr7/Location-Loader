@@ -1,0 +1,58 @@
+<div class="container-fluid">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="row" id="col1">
+                    <div *ngFor="let info of this.info">
+                        <div class="w3-card-4">
+                            <img src={{info.dp}} height="100px" width="200px" alt="Norway">
+                            <div class="w3-container w3-center">
+                                <br>
+                                <b>Name:</b>{{info.name}}<br>
+                                <b>Gender:</b>{{info.gender}}<br>
+                                <b>Location:</b>{{info.city}},{{info.country}}<br>
+                                <b>Locale:</b>{{info.locale}}<br>
+                                <b>TimeZone:</b>{{info.timezone}}
+
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div id="map"></div>
+                </div>
+            </div>
+            <div class="col-sm-3" id="col2">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Location</th>
+                                    <th>TimeZone</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let info of this.info">
+                                    <td>{{info.name}}</td>
+                                    <td>{{info.gender}}</td>
+                                    <td>{{info.city}},{{info.country}}</td>
+                                    <td>{{info.timezone}}&nbsp;GMT</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
