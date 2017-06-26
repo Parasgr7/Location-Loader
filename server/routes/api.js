@@ -9,7 +9,6 @@ const assert = require('assert');
 const User = require('../../models/user');
 const config = require('../../config/database');
 
-const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = require("request");
 
@@ -20,6 +19,88 @@ router.use(function(req, res, next) { //allow cross origin requests
     res.header("Access-Control-Allow-Credentials", true);
     next();
 });
+
+
+router.post('/register', (req, res, next) => {
+    console.log(req.body.email);
+    request("https://maps.googleapis.com/maps/api/geocode/json?address=" + req.body.location + "&key=AIzaSyBCmnkJo1GSzHxLSiElowXkeuHmRBpMBok", function(err, response1, body1) {
+        if (err) {
+            res.status(400).json(err);
+        } else if (response1.statusCode == 400) {
+            // console.log(body);
+            res.status(400).json({ success: false, message: 'Invalid id or token provided' });
+        } else {
+            body1 = JSON.parse(body1);
+            let newUser = new User({
+                name: req.body.name,
+                email: req.body.email,
+                password: req.body.password,
+                lat: body1.results[0].geometry.location.lat,
+                long: body1.results[0].geometry.location.lng
+
+
+
+            });
+            User.addUser(newUser, (err, user) => {
+                console.log(err);
+                if (err) {
+                    res.json({ success: false, msg: 'Failed to register' });
+                } else {
+
+                    res.json({ success: true, msg: 'Succesfully registered' });
+
+
+                }
+
+            });
+        }
+    });
+
+});
+
+
+
+
+router.post('/authenticate', (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    User.getUserByEmail(email, (err, user) => {
+
+        if (err) throw err;
+
+        if (!user) {
+            return res.json({ success: false, msg: 'User not found' });
+
+        }
+        User.comparePassword(password, user.password, (err, isMatch) => {
+            if (err) throw err;
+            if (isMatch) {
+                const token = jwt.sign(user, config.secret, {
+                    expiresIn: 604800
+                });
+                console.log(token);
+                res.json({
+                    success: true,
+                    token: 'JWT ' + token,
+                    user: {
+                        id: user._id,
+                        name: user.name,
+                        username: user.username,
+                        email: user.email
+                    }
+                });
+            } else {
+                return res.json({ success: false, msg: 'Wrong password' });
+            }
+
+
+        });
+
+    });
+
+
+});
+
 
 
 
@@ -57,20 +138,31 @@ router.post('/facebook', function(req, res, next) {
                 });
 
 
-                User.addUser(newUser, (err, user) => {
+                User.addUserFace(newUser, (err, user) => {
 
                     if (err) {
                         res.json({ success: false, msg: 'Failed to register' });
                     } else {
+                        console.log(user);
+                        // res.json({ success: true, msg: 'Succesfully registered' });
 
-                        res.json({ success: true, msg: 'Succesfully registered' });
+                        const token = jwt.sign(user, config.secret, {
+                            expiresIn: 604800
+                        });
 
+                        res.json({
+                            success: true,
+                            token: 'JWT ' + token,
+                            user: {
+                                id: user.uid,
+                                name: user.name
+                            }
+                        });
 
                     }
                 });
 
             });
-
 
 
         }
@@ -79,7 +171,8 @@ router.post('/facebook', function(req, res, next) {
 
 
 
-router.get('/fetchCoordinates', (req, res, next) => {
+
+router.get('/fetchCoordinates', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
     var result = [];
     User.find(function(err, data) {
@@ -94,7 +187,7 @@ router.get('/fetchCoordinates', (req, res, next) => {
 
 
 
-router.get('/fetchUser', (req, res, next) => {
+router.get('/fetchUser', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
     var result = [];
     User.find(function(err, data) {

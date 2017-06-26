@@ -5,7 +5,7 @@
                 <div class="row" id="col1">
                     <div *ngFor="let info of this.info">
                         <div class="w3-card-4">
-                            <img src={{info.dp}} height="100px" width="200px" alt="Norway">
+                            <img src={{info.dp}} height="100px" width="100px" alt="Norway">
                             <div class="w3-container w3-center">
                                 <br>
                                 <b>Name:</b>{{info.name}}<br>
@@ -23,7 +23,9 @@
             </div>
             <div class="col-sm-6">
                 <div class="row">
-                    <div id="map"></div>
+                    <div class="col-sm-12">
+                        <div id="map"></div>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-3" id="col2">

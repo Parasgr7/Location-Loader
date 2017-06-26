@@ -1,62 +1,85 @@
-<h2>
-    SignUp</h2>
-<form #userform="ngForm" method="POST" novalidate (ngSubmit)="onsubmit(userform.value,userform.valid)  ">
-
-
-
-    <div class="row">
-      <div class="col-sm-6">
-
-
-        <label>Name</label>
-
-
-        <input id="id1" name="name" type="text" aria-required="true" required minlength="4" maxlength="10" placeholder="Enter Name" ngModel class="form-control">
-
-        <div *ngIf="name.errors && (name.dirty||name.touched)">
-            <div [hidden]="!name.errors.required">
-                <small><i>*Please enter your name</i></small>
-            </div>
-            <div [hidden]="!name.errors.minlength">
-                <small><i>*Please enter atleast 4 character</i></small>
+<div class="container">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-sm-3">
 
             </div>
+            <div class="col-sm-6">
+
+                <h2>
+                    Sign-Up</h2>
+
+                <form #userform="ngForm" novalidate (ngSubmit)="onsubmit(userform.value)  ">
+
+                    <div class="row">
+
+                        <div class="col-sm-12">
+
+
+                            <label>Name</label>
+
+
+                            <input id="id1" name="name" type="text" required placeholder="Enter Name" ngModel class="form-control">
+
+                            <br>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-sm-12">
+
+
+                            <label>E-mail</label>
+
+
+                            <input id="id2" name="email" type="text" required placeholder="Enter your E-mail" ngModel class="form-control">
+
+                            <br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label>Password</label>
+                            <input type="password" name="password" placeholder="Enter Password" required class="form-control" ngModel>
+                            <br>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <label>Retype password</label>
+                            <input type="password" name="repassword" required placeholder="ReEnter Password" class="form-control" ngModel>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-12">
+
+
+                            <label>Location</label>
+
+
+                            <input id="id2" name="location" type="text" required placeholder="Enter your location" ngModel class="form-control">
+
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        &emsp; <button type="submit" [disabled]="!userform.valid" class="btn btn-success">Submit</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-3">
 
         </div>
-        </div>
     </div>
-
-
-    <div class="row">
-<div class="col-sm-6">
-        <label>Password</label>
-        <input type="password" name="password" [ngModel]="user.password" validateEqual="confirmPassword" reverse="true" placeholder="Enter Password" required #password="ngModel"  >
-        <div [hidden]="password.valid || (password.pristine && !userform.submitted)">
-            <small><i> *Password is required</i></small>
-        </div>
-    </div>
-    </div>
-
-
-    <div class="row">
-      <div class="col-sm-6">
-
-        <label>Retype password</label>
-        <input type="password" name="repassword" [ngModel]="user.confirmPassword" required validateEqual="password" placeholder="ReEnter Password" ngModel >
-        <div [hidden]="confirmPassword.valid ||  (confirmPassword.pristine && !userform.submitted)">
-            <small><i>*Password mismatch</i></small>
-        </div>
-    </div>
-    </div>
-
-
-
-
-    <br>
-    <br>
-
-    <div>
-        <button type="submit" [disabled]="!userform.valid" class="btn btn-success">Submit</button>
-    </div>
-
-</form>
+</div>

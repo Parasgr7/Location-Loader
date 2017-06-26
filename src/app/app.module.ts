@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
-
+import {AuthGuard} from './guards/auth.guard';
+import{EqualValidator} from './custom-validator';
 import { RouterModule,Routes } from '@angular/router';
 import { FacebookModule } from 'ng2-facebook-sdk';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -11,6 +12,7 @@ import {RegisterService} from './register.service';
 import { MenuComponent } from './menu/menu.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 
@@ -19,8 +21,10 @@ import { LoginComponent } from './login/login.component';
     AppComponent,
     DashboardComponent,
     MenuComponent,
+    EqualValidator,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -28,13 +32,13 @@ import { LoginComponent } from './login/login.component';
     HttpModule,
     FacebookModule.forRoot(),
     RouterModule.forRoot([
-      {path:'',component:AppComponent},
-      {path:'dashboard',component:DashboardComponent},
+      {path:'',component:MenuComponent},
+      {path:'dashboard',component:DashboardComponent,canActivate: [AuthGuard]},
       {path:'register',component:RegisterComponent},
-      {path:'signup',component:LoginComponent}
+      {path:'login',component:LoginComponent}
     ])
   ],
-  providers: [RegisterService],
+  providers: [RegisterService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

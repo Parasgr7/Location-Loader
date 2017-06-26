@@ -1,3 +1,70 @@
-<p>
-  login works!
-</p>
+<div class="container">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-sm-3">
+
+            </div>
+            <div class="col-sm-6">
+
+                <h2>
+                    Sign-In</h2>
+
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <button (click)="loginFacebook()" class="btn btn-lg btn-primary btn-block">
+    Login with Facebook
+  </button>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-2">
+                        <h3><b>OR</b></h3>
+                    </div>
+                    <div class="col-sm-5"></div>
+                </div>
+
+                <form #userform="ngForm" novalidate (ngSubmit)="onlog(userform.value)  ">
+
+
+
+
+                    <div class="row">
+
+                        <div class="col-sm-12">
+
+
+                            <label>E-mail</label>
+
+
+                            <input id="id2" name="email" type="text" required placeholder="Enter your E-mail" ngModel class="form-control">
+
+                            <br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label>Password</label>
+                            <input type="password" name="password" placeholder="Enter Password" required class="form-control" ngModel>
+                            <br>
+                        </div>
+                    </div>
+
+
+                    <br>
+                    <br>
+                    <div class="row">
+                        &emsp; <button type="submit" [disabled]="!userform.valid" class="btn btn-success">Submit</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-3">
+
+        </div>
+    </div>
+</div>
