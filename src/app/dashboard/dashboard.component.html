@@ -1,25 +1,52 @@
 <div class="container-fluid">
     <div class="col-sm-12">
         <div class="row">
-            <div class="col-sm-3">
-                <div class="row" id="col1">
-                    <div *ngFor="let info of this.info">
-                        <div class="w3-card-4">
-                            <img src={{info.dp}} height="100px" width="100px" alt="Norway">
-                            <div class="w3-container w3-center">
-                                <br>
-                                <b>Name:</b>{{info.name}}<br>
-                                <b>Gender:</b>{{info.gender}}<br>
-                                <b>Location:</b>{{info.city}},{{info.country}}<br>
-                                <b>Locale:</b>{{info.locale}}<br>
-                                <b>TimeZone:</b>{{info.timezone}}
+            <div class="col-sm-2">
+                <h4>Recent Logged In users</h4>
+            </div>
+            <div class="col-sm-6">
+                <h4>Location in world map</h4>
+            </div>
+            <div class="col-sm-4">
+                <h4>Details of all users</h4>
+            </div>
+        </div>
+        <div class="row">
 
+            <div class="col-sm-2">
+                <div class="row" id="col1">
+                    <div *ngFor="let info of this.arra">
+                        <div class="jumbotron">
+                            <img src={{info.dp}} height="100px" width="100px" alt="Nothing to display">
+                            <div class="conatiner">
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-4"><b>Name:</b></div>
+                                    <div class="col-sm-8">{{info.name}}</div>
+                                    <br>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4"><b>Gender:</b></div>
+                                    <div class="col-sm-8">{{info.gender}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-5"><b>Location:</b></div>
+                                    <div class="col-sm-7">{{info.city}},{{info.country}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4"><b>Locale:</b></div>
+                                    <div class="col-sm-8">{{info.locale}}</div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4"><b>TimeZone:</b></div>
+                                    <div class="col-sm-8">&emsp;{{info.timezone}}</div>
+
+                                </div>
                             </div>
                         </div>
-                        <br>
                     </div>
                 </div>
-
             </div>
             <div class="col-sm-6">
                 <div class="row">
@@ -28,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3" id="col2">
+            <div class="col-sm-4" id="col2">
                 <div class="row">
                     <div class="col-sm-12">
 

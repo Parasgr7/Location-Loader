@@ -11,6 +11,8 @@ export class DashboardComponent implements OnInit {
 public value= Array;
 public locations:any;
 public info;
+public profile;
+public arra;
 
   constructor(private service:RegisterService) { 
     
@@ -61,10 +63,25 @@ fetchUser()
   
   this.service.fetchUser().subscribe(data=>{
     this.info=data;
-    console.log(this.info);
-  
+
+  this.arra=data.reverse().slice(1,4); 
 });
 
+
 }
+
+fetchProfile(){
+//     this.service.fetchCurrentUser().subscribe(data=>{
+// this.profile=data;
+// console.log(data);
+//   });
+this.service.fetchUser().subscribe(data=>{
+    
+  this.arra=data.reverse().slice(1,5);           
+});
+}
+
+
+
 
 }

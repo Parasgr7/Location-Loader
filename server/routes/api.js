@@ -78,7 +78,6 @@ router.post('/authenticate', (req, res, next) => {
                 const token = jwt.sign(user, config.secret, {
                     expiresIn: 604800
                 });
-                console.log(token);
                 res.json({
                     success: true,
                     token: 'JWT ' + token,
@@ -154,7 +153,7 @@ router.post('/facebook', function(req, res, next) {
                             success: true,
                             token: 'JWT ' + token,
                             user: {
-                                id: user.uid,
+                                uid: user.uid,
                                 name: user.name
                             }
                         });
@@ -197,6 +196,40 @@ router.get('/fetchUser', passport.authenticate('jwt', { session: false }), (req,
         });
 
         res.send(result);
+    });
+});
+
+
+
+router.get('/fetchFbUser/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+
+    User.findOne({ uid: req.params.id }, (err, user) => {
+        if (err) {
+            console.log(err);
+        }
+        if (user) {
+            res.send(user);
+        } else {
+            return done(null, false);
+        }
+
+    });
+});
+
+
+
+router.get('/fetchLogUser/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+
+    User.findOne({ _id: req.params.id }, (err, user) => {
+        if (err) {
+            return done(err, false);
+        }
+        if (user) {
+            res.send(user);
+        } else {
+            return done(null, false);
+        }
+
     });
 });
 

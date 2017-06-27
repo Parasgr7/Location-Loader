@@ -8,7 +8,7 @@
 
                 <h2>
                     Sign-Up</h2>
-
+                <br>
                 <form #userform="ngForm" novalidate (ngSubmit)="onsubmit(userform.value)  ">
 
                     <div class="row">
@@ -19,8 +19,18 @@
                             <label>Name</label>
 
 
-                            <input id="id1" name="name" type="text" required placeholder="Enter Name" ngModel class="form-control">
+                            <input id="id1" name="name" type="text" required #name="ngModel" placeholder="Enter Name" minlength="4" ngModel class="form-control">
 
+                            <div *ngIf="name.errors && (name.dirty||name.touched)">
+                                <div [hidden]="!name.errors.required">
+                                    <small><i>*Please enter your name</i></small>
+                                </div>
+                                <div [hidden]="!name.errors.minlength">
+                                    <small><i>*Please enter atleast 4 character</i></small>
+
+                                </div>
+
+                            </div>
                             <br>
                         </div>
                     </div>
@@ -34,17 +44,28 @@
                             <label>E-mail</label>
 
 
-                            <input id="id2" name="email" type="text" required placeholder="Enter your E-mail" ngModel class="form-control">
-
+                            <input id="id2" name="email" type="text" #email="ngModel" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="Enter your E-mail" ngModel class="form-control">
+                            <div *ngIf="email.errors && (email.dirty||email.touched)">
+                                <div [hidden]="!email.errors.required">
+                                    <small><i>*Please enter your email address </i></small>
+                                </div>
+                                <div [hidden]="!email.errors.pattern">
+                                    <small><i>*Email is required and format should be </i>john@doe.com.</small>
+                                </div>
+                            </div>
                             <br>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <label>Password</label>
-                            <input type="password" name="password" placeholder="Enter Password" required class="form-control" ngModel>
+                            <input type="password" name="password" validateEqual="confirmPassword" reverse="true" #password="ngModel" placeholder="Enter Password" required class="form-control" ngModel>
+                            <div [hidden]="password.valid || (password.pristine && !userform.submitted)">
+                                <small><i> *Password is required</i></small>
+                            </div>
                             <br>
                         </div>
+
                     </div>
 
 
@@ -52,7 +73,10 @@
                         <div class="col-sm-12">
 
                             <label>Retype password</label>
-                            <input type="password" name="repassword" required placeholder="ReEnter Password" class="form-control" ngModel>
+                            <input type="password" name="repassword" validateEqual="password" #confirmPassword="ngModel" required placeholder="ReEnter Password" class="form-control" ngModel>
+                            <div [hidden]="confirmPassword.valid ||  (confirmPassword.pristine && !userform.submitted)">
+                                <small><i>*Password mismatch</i></small>
+                            </div>
                             <br>
                         </div>
                     </div>
@@ -64,8 +88,17 @@
                             <label>Location</label>
 
 
-                            <input id="id2" name="location" type="text" required placeholder="Enter your location" ngModel class="form-control">
+                            <input id="id2" name="location" #location="ngModel" type="text" minlength=3 required placeholder="Enter your location" ngModel class="form-control">
+                            <div *ngIf="location.errors && (location.dirty||location.touched)">
+                                <div [hidden]="!location.errors.required">
+                                    <small><i>*Please enter your Location</i></small>
+                                </div>
+                                <div [hidden]="(!location.errors.minlength)">
+                                    <small><i>*Please enter proper location</i></small>
 
+                                </div>
+
+                            </div>
                             <br>
                         </div>
                     </div>

@@ -77,6 +77,29 @@ fetchUser()
           .map(res=>res.json());
 }
 
+fetchCurrentUser()
+{
+   let headers= new Headers();
+       this.loadToken();
+       console.log(this.id.uid);
+       if(this.id.email)
+{
+  headers.append('Authorization',this.authToken);
+   headers.append('Content-Type','application/json'); 
+   
+       console.log(this.id.email);
+    return this.http.get('http://localhost:3000/api/fetchLogUser/'+this.id.id,{headers:headers})
+          .map(res=>res.json());
+}
+else if (this.id.uid) {
+  headers.append('Authorization',this.authToken);
+   headers.append('Content-Type','application/json'); 
+   
+    return this.http.get('http://localhost:3000/api/fetchFbUser/'+this.id.uid,{headers:headers})
+          .map(res=>res.json());
+}
+}
+
 
 
  storeUserData(token,user)
